@@ -1,0 +1,17 @@
+.nav_logo {
+  color: white;
+  font-size: 15px;
+}
+.nav_logo > img {
+  width: 80px;
+}
+
+.nav_link {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+
+.nav_link:hover {
+  color: wheat;
+}

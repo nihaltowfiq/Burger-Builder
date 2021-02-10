@@ -1,0 +1,19 @@
+.burger {
+  widows: 100%;
+  height: 350px;
+  overflow-y: scroll;
+  text-align: center;
+  margin: auto;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.burger::-webkit-scrollbar {
+  display: none;
+}
+
+/*hide scrollbar for Firefox, IE and EDGE */
+.burger {
+  -ms-overflow-style: none; /* IE and EDGE */
+  scrollbar-width: none; /* Firefox */
+}

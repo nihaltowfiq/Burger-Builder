@@ -27,16 +27,6 @@ class BurgerBuilder extends Component {
       }
     }
     this.setState({ ingredients: newIngredients, totalPrice: newPrice });
-
-    // Below the code in my other thought
-    // const newPrice = this.state.totalPrice + INGREDIENT_PRICE[type];
-    // let matchType = this.state.ingredients.find((item) => item.type === type);
-    // matchType.amount++;
-    // this.setState({
-    //   ...this.state.ingredients,
-    //   matchType,
-    //   totalPrice: newPrice,
-    // });
   };
 
   removeIngredientHandle = (type) => {
@@ -49,24 +39,6 @@ class BurgerBuilder extends Component {
       }
     }
     this.setState({ ingredients: newIngredients, totalPrice: newPrice });
-
-    // Below the code in my other thought
-    // let newPrice;
-    // if (this.state.totalPrice <= 50) {
-    //   return;
-    // } else {
-    //   newPrice = this.state.totalPrice - INGREDIENT_PRICE[type];
-    // }
-
-    // let matchType = this.state.ingredients.find((item) => item.type === type);
-    // if (matchType.amount !== 0) {
-    //   matchType.amount--;
-    // }
-    // this.setState({
-    //   ...this.state.ingredients,
-    //   matchType,
-    //   totalPrice: newPrice,
-    // });
   };
   render() {
     return (

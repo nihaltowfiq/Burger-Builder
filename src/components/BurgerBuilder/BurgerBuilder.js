@@ -47,15 +47,19 @@ class BurgerBuilder extends Component {
     this.updatePurchasable(newIngredients);
   };
 
+  updatePurchasable = (ingredients) => {
+    const sum = ingredients.reduce((sum, element) => sum + element.amount, 0);
+    this.setState({ purchasable: sum > 0 });
+  };
+
   toggleModal = () => {
     this.setState({
       modalOpen: !this.state.modalOpen,
     });
   };
 
-  updatePurchasable = (ingredients) => {
-    const sum = ingredients.reduce((sum, element) => sum + element.amount, 0);
-    this.setState({ purchasable: sum > 0 });
+  handleCheckout = () => {
+    this.props.history.push("/checkout");
   };
   render() {
     return (
@@ -77,7 +81,9 @@ class BurgerBuilder extends Component {
             <Summary ingredients={this.state.ingredients} />
           </ModalBody>
           <ModalFooter>
-            <Button color="success">Continue to checkout</Button>
+            <Button color="success" onClick={this.handleCheckout}>
+              Continue to checkout
+            </Button>
             <Button color="secondary" onClick={this.toggleModal}>
               Cancel
             </Button>

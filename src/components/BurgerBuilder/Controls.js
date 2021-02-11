@@ -21,7 +21,7 @@ const BuildControl = ({ label, type, addIngredient, removeIngredient }) => {
   );
 };
 
-const Controls = ({ addIngredient, removeIngredient }) => {
+const Controls = ({ addIngredient, removeIngredient, price }) => {
   return (
     <div className="container ml-md-5">
       <Card className="my-5 text-center">
@@ -45,7 +45,9 @@ const Controls = ({ addIngredient, removeIngredient }) => {
           })}
         </CardBody>
         <CardFooter>
-          <h5>Price BDT</h5>
+          <h5>
+            Price <strong>{price}</strong> BDT
+          </h5>
         </CardFooter>
       </Card>
     </div>

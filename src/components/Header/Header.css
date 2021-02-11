@@ -10,8 +10,15 @@
   text-decoration: none;
   color: white;
   font-size: 20px;
+  margin: 0 10px;
 }
 
 .nav_link:hover {
   color: wheat;
+  text-decoration: none;
+}
+
+.active {
+  color: wheat;
+  text-shadow: 1px 1px gray;
 }

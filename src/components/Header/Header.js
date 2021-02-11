@@ -1,5 +1,6 @@
 import React from "react";
-import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
+import { NavLink } from "react-router-dom";
+import { Nav, Navbar, NavbarBrand, NavItem } from "reactstrap";
 import logo from "../../assests/logo.png";
 import "./Header.css";
 
@@ -15,8 +16,11 @@ const Header = () => {
         </NavbarBrand>
         <Nav className="ml-auto">
           <NavItem>
-            <NavLink className="nav_link" href="#">
-              Something
+            <NavLink className="nav_link" exact to="/">
+              Burger Builder
+            </NavLink>
+            <NavLink className="nav_link" to="/orders">
+              Orders
             </NavLink>
           </NavItem>
         </Nav>

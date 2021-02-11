@@ -21,7 +21,13 @@ const BuildControl = ({ label, type, addIngredient, removeIngredient }) => {
   );
 };
 
-const Controls = ({ addIngredient, removeIngredient, price, toggleModal }) => {
+const Controls = ({
+  addIngredient,
+  removeIngredient,
+  price,
+  toggleModal,
+  purchasable,
+}) => {
   return (
     <div className="container ml-md-5">
       <Card className="my-5 text-center">
@@ -49,7 +55,7 @@ const Controls = ({ addIngredient, removeIngredient, price, toggleModal }) => {
             Price <strong>{price}</strong> BDT
           </h5>
         </CardFooter>
-        <Button onClick={toggleModal} color="primary">
+        <Button disabled={!purchasable} onClick={toggleModal} color="primary">
           Order Now
         </Button>
       </Card>

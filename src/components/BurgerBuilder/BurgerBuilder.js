@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Burger from "./Burger";
 import Controls from "./Controls";
+import Summary from "./Summary";
 
 const INGREDIENT_PRICE = {
   salad: 30,
@@ -18,6 +19,7 @@ class BurgerBuilder extends Component {
     ],
     totalPrice: 50,
     modalOpen: false,
+    purchasable: false,
   };
 
   addIngredientHandle = (type) => {
@@ -29,6 +31,7 @@ class BurgerBuilder extends Component {
       }
     }
     this.setState({ ingredients: newIngredients, totalPrice: newPrice });
+    this.updatePurchasable(newIngredients);
   };
 
   removeIngredientHandle = (type) => {
@@ -41,12 +44,18 @@ class BurgerBuilder extends Component {
       }
     }
     this.setState({ ingredients: newIngredients, totalPrice: newPrice });
+    this.updatePurchasable(newIngredients);
   };
 
   toggleModal = () => {
     this.setState({
       modalOpen: !this.state.modalOpen,
     });
+  };
+
+  updatePurchasable = (ingredients) => {
+    const sum = ingredients.reduce((sum, element) => sum + element.amount, 0);
+    this.setState({ purchasable: sum > 0 });
   };
   render() {
     return (
@@ -58,12 +67,14 @@ class BurgerBuilder extends Component {
             removeIngredient={this.removeIngredientHandle}
             price={this.state.totalPrice}
             toggleModal={this.toggleModal}
+            purchasable={this.state.purchasable}
           />
         </div>
         <Modal isOpen={this.state.modalOpen}>
           <ModalHeader>Your Order Summary</ModalHeader>
           <ModalBody>
             <h5>Total Price: {this.state.totalPrice.toFixed(0)} BDT</h5>
+            <Summary ingredients={this.state.ingredients} />
           </ModalBody>
           <ModalFooter>
             <Button color="success">Continue to checkout</Button>

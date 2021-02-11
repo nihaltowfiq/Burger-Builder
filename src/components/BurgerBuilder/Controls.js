@@ -7,17 +7,21 @@ const controls = [
   { label: "Meat", type: "meat" },
 ];
 
-const BuildControl = (props) => {
+const BuildControl = ({ label, type, addIngredient, removeIngredient }) => {
   return (
     <div className="d-flex my-1">
-      <div className="mr-auto ml-5 font-weight-bold">{props.label}</div>
-      <button className="btn btn-danger btn-sm mx-1">Less</button>
-      <button className="btn btn-success btn-sm mx-1">More</button>
+      <div className="mr-auto ml-5 font-weight-bold">{label}</div>
+      <button onClick={removeIngredient} className="btn btn-danger btn-sm mx-1">
+        Less
+      </button>
+      <button onClick={addIngredient} className="btn btn-success btn-sm mx-1">
+        More
+      </button>
     </div>
   );
 };
 
-const Controls = () => {
+const Controls = ({ addIngredient, removeIngredient }) => {
   return (
     <div className="container ml-md-5">
       <Card className="my-5 text-center">
@@ -31,6 +35,8 @@ const Controls = () => {
           {controls.map((item) => {
             return (
               <BuildControl
+                addIngredient={() => addIngredient(item.type)}
+                removeIngredient={() => removeIngredient(item.type)}
                 label={item.label}
                 type={item.type}
                 key={Math.random()}

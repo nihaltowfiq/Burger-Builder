@@ -55,7 +55,11 @@ const Controls = ({
             Price <strong>{price}</strong> BDT
           </h5>
         </CardFooter>
-        <Button disabled={!purchasable} onClick={toggleModal} color="primary">
+        <Button
+          disabled={!purchasable}
+          onClick={toggleModal}
+          className="btn-pink"
+        >
           Order Now
         </Button>
       </Card>

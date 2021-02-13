@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button } from "reactstrap";
+import { Alert, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import Spinner from "../../Spinner/Spinner";
 
 class Checkout extends Component {
@@ -12,6 +12,9 @@ class Checkout extends Component {
       paymentType: "Cash On Delivery",
     },
     isLoading: false,
+    isModalOpen: false,
+    modalMsg: null,
+    alertType: null,
   };
 
   inputChangeHandler = (e) => {
@@ -38,12 +41,29 @@ class Checkout extends Component {
         "https://burger-builder-website-default-rtdb.firebaseio.com/orders.json",
         order
       )
-      .then((res) =>
+      .then((res) => {
         res.status === 200
-          ? this.setState({ isLoading: false })
-          : this.setState({ isLoading: false })
-      )
-      .catch((err) => this.setState({ isLoading: false }));
+          ? this.setState({
+              isLoading: false,
+              isModalOpen: true,
+              modalMsg: "Your Order Placed Successfully!",
+              alertType: "success",
+            })
+          : this.setState({
+              isLoading: false,
+              isModalOpen: true,
+              modalMsg: "Something Went Wrong! Order Again!",
+              alertType: "danger",
+            });
+      })
+      .catch((err) =>
+        this.setState({
+          isLoading: false,
+          isModalOpen: true,
+          modalMsg: "Something Went Wrong! Order Again!",
+          alertType: "danger",
+        })
+      );
   };
   render() {
     const form = (
@@ -107,7 +127,21 @@ class Checkout extends Component {
         </form>
       </div>
     );
-    return <div>{this.state.isLoading ? <Spinner /> : form}</div>;
+    return (
+      <div>
+        {this.state.isLoading ? <Spinner /> : form}
+        <Modal isOpen={this.state.isModalOpen}>
+          <ModalBody>
+            <Alert className="text-center" color={this.state.alertType}>
+              {this.state.modalMsg}
+            </Alert>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={this.goBack}>Go to Burger Builder</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
   }
 }
 

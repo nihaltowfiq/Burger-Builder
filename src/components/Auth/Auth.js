@@ -6,9 +6,33 @@ const Auth = () => {
     <div>
       <Formik
         initialValues={{ email: "", password: "", confirmPassword: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => console.log("VALUES:", values)}
+        validate={(values) => {
+          const errors = {};
+          if (!values.email) {
+            errors.email = "Required";
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = "Invalid Email Address";
+          }
+
+          if (!values.password) {
+            errors.password = "Required";
+          } else if (values.password.length < 4) {
+            errors.password = "Must be atleast 4 characters";
+          }
+
+          if (!values.confirmPassword) {
+            errors.confirmPassword = "Required";
+          } else if (values.password !== values.confirmPassword) {
+            errors.confirmPassword = "Password field doesn't match!";
+          }
+          //   console.log("ERRORS:", errors);
+          return errors;
+        }}
       >
-        {({ values, handleChange, handleSubmit }) => (
+        {({ values, handleChange, handleSubmit, errors }) => (
           <div>
             <form onSubmit={handleSubmit}>
               <input
@@ -19,6 +43,7 @@ const Auth = () => {
                 value={values.email}
                 onChange={handleChange}
               />
+              {errors.email}
               <br />
               <input
                 name="password"
@@ -28,6 +53,7 @@ const Auth = () => {
                 value={values.password}
                 onChange={handleChange}
               />
+              {errors.password}
               <br />
               <input
                 name="confirmPassword"
@@ -37,6 +63,7 @@ const Auth = () => {
                 value={values.confirmPassword}
                 onChange={handleChange}
               />
+              {errors.confirmPassword}
               <br />
               <button type="submit" className="btn btn-success">
                 Sign Up

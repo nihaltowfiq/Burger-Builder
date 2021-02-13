@@ -1,6 +1,7 @@
 import {
   ADD_INGREDIENT,
   LOAD_ORDERS,
+  ORDERS_LOAD_FAILED,
   REMOVE_INGREDIENT,
   RESET_INGREDIENTS,
   UPDATE_PURCHASABLE,
@@ -80,6 +81,12 @@ export const Reducer = (state = initialState, action) => {
       return {
         ...state,
         orders: newOrders,
+        orderLoading: false,
+      };
+    case ORDERS_LOAD_FAILED:
+      return {
+        ...state,
+        orderError: true,
         orderLoading: false,
       };
     default:

@@ -18,7 +18,7 @@ const Orders = ({ fetchOrders, orders, orderLoading, orderError }) => {
     if (orders.length === 0) {
       order = (
         <Alert className="text-center" color="warning">
-          You have no Orders!
+          You have <strong>no</strong> Orders!
         </Alert>
       );
     } else {

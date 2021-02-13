@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Alert, Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import Spinner from "../../Spinner/Spinner";
+import { resetIngredients } from "../../../redux/actionsCreator";
 
 class Checkout extends Component {
   state = {
@@ -42,19 +43,22 @@ class Checkout extends Component {
         order
       )
       .then((res) => {
-        res.status === 200
-          ? this.setState({
-              isLoading: false,
-              isModalOpen: true,
-              modalMsg: "Your Order Placed Successfully!",
-              alertType: "success",
-            })
-          : this.setState({
-              isLoading: false,
-              isModalOpen: true,
-              modalMsg: "Something Went Wrong! Order Again!",
-              alertType: "danger",
-            });
+        if (res.status === 200) {
+          this.setState({
+            isLoading: false,
+            isModalOpen: true,
+            modalMsg: "Your Order Placed Successfully!",
+            alertType: "success",
+          });
+          this.props.resetIngredients();
+        } else {
+          this.setState({
+            isLoading: false,
+            isModalOpen: true,
+            modalMsg: "Something Went Wrong! Order Again!",
+            alertType: "danger",
+          });
+        }
       })
       .catch((err) =>
         this.setState({
@@ -153,4 +157,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Checkout);
+const mapDispatchToProps = { resetIngredients };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

@@ -1,6 +1,7 @@
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
+  RESET_INGREDIENTS,
   UPDATE_PURCHASABLE,
 } from "./actionTypes";
 
@@ -56,6 +57,17 @@ export const Reducer = (state = initialState, action) => {
         0
       );
       return { ...state, purchasable: sum > 0 };
+    case RESET_INGREDIENTS:
+      return {
+        ...state,
+        ingredients: [
+          { type: "cheese", amount: 0 },
+          { type: "salad", amount: 0 },
+          { type: "meat", amount: 0 },
+        ],
+        totalPrice: 50,
+        purchasable: false,
+      };
     default:
       return state;
   }

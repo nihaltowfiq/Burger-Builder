@@ -1,6 +1,7 @@
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
+  RESET_INGREDIENTS,
   UPDATE_PURCHASABLE,
 } from "./actionTypes";
 
@@ -14,4 +15,8 @@ export const removeIngredient = (ingType) => {
 
 export const updatePurchasable = () => {
   return { type: UPDATE_PURCHASABLE };
+};
+
+export const resetIngredients = () => {
+  return { type: RESET_INGREDIENTS };
 };

@@ -19,8 +19,11 @@ const Header = () => {
             <NavLink className="nav_link" exact to="/">
               Burger Builder
             </NavLink>
-            <NavLink className="nav_link" to="/orders">
+            <NavLink className="nav_link" exact to="/orders">
               Orders
+            </NavLink>
+            <NavLink className="nav_link" exact to="/login">
+              Login
             </NavLink>
           </NavItem>
         </Nav>

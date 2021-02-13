@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Button } from "reactstrap";
 
 class Checkout extends Component {
@@ -21,12 +23,34 @@ class Checkout extends Component {
   };
 
   submitHandler = (e) => {
-    console.log(this.state.values);
     e.preventDefault();
+    const order = {
+      ingredients: this.props.ingredients,
+      customer: this.state.values,
+      totalPrice: this.props.totalPrice,
+      orderTime: new Date(),
+    };
+    axios
+      .post(
+        "https://burger-builder-website-default-rtdb.firebaseio.com/orders.json",
+        order
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.message));
   };
   render() {
     return (
       <div>
+        <h4
+          style={{
+            border: "1px solid gray",
+            boxShadow: "1px 1px #888888",
+            borderRadius: "5px",
+            padding: "20px",
+          }}
+        >
+          Payment: {this.props.totalPrice} BDT
+        </h4>
         <form
           onSubmit={this.submitHandler}
           style={{
@@ -34,6 +58,7 @@ class Checkout extends Component {
             boxShadow: "1px 1px #888888",
             borderRadius: "5px",
             padding: "20px",
+            margin: "10px 0",
           }}
         >
           <textarea
@@ -62,7 +87,11 @@ class Checkout extends Component {
             <option value="bKash">bKash</option>
           </select>
           <br />
-          <Button type="submit" className="btn-pink mr-auto">
+          <Button
+            type="submit"
+            className="btn-pink mr-auto"
+            disabled={!this.props.purchasable}
+          >
             Place Order
           </Button>
           <Button color="secondary" className="ml-1" onClick={this.goBack}>
@@ -74,4 +103,12 @@ class Checkout extends Component {
   }
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice,
+    purchasable: state.purchasable,
+  };
+};
+
+export default connect(mapStateToProps)(Checkout);

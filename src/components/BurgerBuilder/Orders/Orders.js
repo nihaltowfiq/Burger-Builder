@@ -7,7 +7,13 @@ import Order from "./Order";
 const Orders = ({ fetchOrders, orders, orderLoading, orderError }) => {
   useEffect(() => fetchOrders(), [fetchOrders]);
   const order = orders.map((order) => <Order key={order.id} order={order} />);
-  return <div>{orderLoading ? <Spinner /> : order}</div>;
+  const orderContainer = (
+    <div>
+      <h3 className="text-center m-3">Total Order: {orders.length}</h3>
+      {order}
+    </div>
+  );
+  return <div>{orderLoading ? <Spinner /> : orderContainer}</div>;
 };
 
 const mapStateToProps = (state) => {

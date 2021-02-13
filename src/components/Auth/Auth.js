@@ -34,7 +34,7 @@ const Auth = () => {
           } else if (values.password !== values.confirmPassword) {
             errors.confirmPassword = "Password field doesn't match!";
           }
-          console.log("ERRORS:", errors);
+          //   console.log("ERRORS:", errors);
           return errors;
         }}
       >
@@ -49,7 +49,7 @@ const Auth = () => {
                 value={values.email}
                 onChange={handleChange}
               />
-              {errors.email}
+              <span className="text-danger">{errors.email}</span>
               <br />
               <input
                 name="password"
@@ -59,7 +59,7 @@ const Auth = () => {
                 value={values.password}
                 onChange={handleChange}
               />
-              {errors.password}
+              <span className="text-danger">{errors.password}</span>
               <br />
               <input
                 name="confirmPassword"
@@ -69,7 +69,7 @@ const Auth = () => {
                 value={values.confirmPassword}
                 onChange={handleChange}
               />
-              {errors.confirmPassword}
+              <span className="text-danger">{errors.confirmPassword}</span>
               <br />
               <button type="submit" className="btn btn-success">
                 Sign Up

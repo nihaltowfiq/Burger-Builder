@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchOrders } from "../../../redux/actionsCreator";
+import Order from "./Order";
 
 const Orders = ({ fetchOrders, orders, orderLoading, orderError }) => {
   useEffect(() => fetchOrders(), [fetchOrders]);
-  console.log(orders);
-  console.log(orderLoading);
-  console.log(orderError);
-  return (
-    <div>
-      <h1>Orders</h1>
-    </div>
-  );
+  const order = orders.map((order) => <Order key={order.id} order={order} />);
+  return <div>{order}</div>;
 };
 
 const mapStateToProps = (state) => {

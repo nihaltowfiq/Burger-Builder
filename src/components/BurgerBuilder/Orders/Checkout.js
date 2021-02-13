@@ -141,7 +141,13 @@ class Checkout extends Component {
             </Alert>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={this.goBack}>Go to Burger Builder</Button>
+            <Button
+              className="btn-pink"
+              onClick={() => this.props.history.push("/orders")}
+            >
+              Go to Orders
+            </Button>
+            <Button onClick={this.goBack}>Back to Burger Builder</Button>
           </ModalFooter>
         </Modal>
       </div>

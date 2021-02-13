@@ -34,7 +34,7 @@ const Auth = () => {
           } else if (values.password !== values.confirmPassword) {
             errors.confirmPassword = "Password field doesn't match!";
           }
-          //   console.log("ERRORS:", errors);
+          console.log("ERRORS:", errors);
           return errors;
         }}
       >

@@ -1,6 +1,12 @@
 import React from "react";
 import { Formik } from "formik";
 
+const formStyle = {
+  border: "1px solid gray",
+  padding: "20px",
+  borderRadius: "8px",
+};
+
 const Auth = () => {
   return (
     <div>
@@ -34,7 +40,7 @@ const Auth = () => {
       >
         {({ values, handleChange, handleSubmit, errors }) => (
           <div>
-            <form onSubmit={handleSubmit}>
+            <form style={formStyle} onSubmit={handleSubmit}>
               <input
                 name="email"
                 placeholder="Enter Your Email"

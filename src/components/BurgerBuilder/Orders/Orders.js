@@ -15,14 +15,22 @@ const Orders = ({ fetchOrders, orders, orderLoading, orderError }) => {
       </Alert>
     );
   } else {
-    order = (
-      <div>
-        <h3 className="text-center m-3">Total Order: {orders.length}</h3>
-        {orders.map((order) => (
-          <Order key={order.id} order={order} />
-        ))}
-      </div>
-    );
+    if (orders.length === 0) {
+      order = (
+        <Alert className="text-center" color="warning">
+          You have no Orders!
+        </Alert>
+      );
+    } else {
+      order = (
+        <div>
+          <h3 className="text-center m-3">Total Order: {orders.length}</h3>
+          {orders.map((order) => (
+            <Order key={order.id} order={order} />
+          ))}
+        </div>
+      );
+    }
   }
   return <div>{orderLoading ? <Spinner /> : order}</div>;
 };

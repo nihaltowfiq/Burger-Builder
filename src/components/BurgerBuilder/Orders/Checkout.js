@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "reactstrap";
+import Spinner from "../../Spinner/Spinner";
 
 class Checkout extends Component {
   state = {
@@ -10,6 +11,7 @@ class Checkout extends Component {
       phone: "",
       paymentType: "Cash On Delivery",
     },
+    isLoading: false,
   };
 
   inputChangeHandler = (e) => {
@@ -24,6 +26,7 @@ class Checkout extends Component {
 
   submitHandler = (e) => {
     e.preventDefault();
+    this.setState({ isLoading: true });
     const order = {
       ingredients: this.props.ingredients,
       customer: this.state.values,
@@ -35,11 +38,15 @@ class Checkout extends Component {
         "https://burger-builder-website-default-rtdb.firebaseio.com/orders.json",
         order
       )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err.message));
+      .then((res) =>
+        res.status === 200
+          ? this.setState({ isLoading: false })
+          : this.setState({ isLoading: false })
+      )
+      .catch((err) => this.setState({ isLoading: false }));
   };
   render() {
-    return (
+    const form = (
       <div>
         <h4
           style={{
@@ -100,6 +107,7 @@ class Checkout extends Component {
         </form>
       </div>
     );
+    return <div>{this.state.isLoading ? <Spinner /> : form}</div>;
   }
 }
 

@@ -98,6 +98,7 @@ class Checkout extends Component {
             className="form-control"
             placeholder="Your Delivery Address"
             onChange={(e) => this.inputChangeHandler(e)}
+            required
           />
           <br />
           <input
@@ -106,6 +107,7 @@ class Checkout extends Component {
             className="form-control"
             placeholder="Your Phone Number"
             onChange={(e) => this.inputChangeHandler(e)}
+            required
           />
           <br />
           <select

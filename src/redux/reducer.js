@@ -1,5 +1,6 @@
 import {
   ADD_INGREDIENT,
+  LOAD_ORDERS,
   REMOVE_INGREDIENT,
   RESET_INGREDIENTS,
   UPDATE_PURCHASABLE,
@@ -17,6 +18,9 @@ const initialState = {
     { type: "salad", amount: 0 },
     { type: "meat", amount: 0 },
   ],
+  orders: [],
+  orderLoading: true,
+  orderError: false,
   totalPrice: 50,
   purchasable: false,
 };
@@ -67,6 +71,16 @@ export const Reducer = (state = initialState, action) => {
         ],
         totalPrice: 50,
         purchasable: false,
+      };
+    case LOAD_ORDERS:
+      let newOrders = [];
+      for (let key in action.payload) {
+        newOrders.push({ ...action.payload[key], id: key });
+      }
+      return {
+        ...state,
+        orders: newOrders,
+        orderLoading: false,
       };
     default:
       return state;

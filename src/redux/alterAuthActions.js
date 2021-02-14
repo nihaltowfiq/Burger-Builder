@@ -13,6 +13,8 @@ export const alterAuthAction = (email, password, mode) => {
         .then((userCredential) => {
           const { email, uid } = userCredential.user;
           console.log(userCredential.user);
+          localStorage.setItem("email", email);
+          localStorage.setItem("userId", uid);
           dispatch(alterAuthSuccess(email, uid));
         })
         .catch((error) => console.log(error.message));
@@ -22,9 +24,23 @@ export const alterAuthAction = (email, password, mode) => {
         .then((userCredential) => {
           const { email, uid } = userCredential.user;
           console.log(userCredential.user);
+          localStorage.setItem("email", email);
+          localStorage.setItem("userId", uid);
           dispatch(alterAuthSuccess(email, uid));
         })
         .catch((error) => console.log(error.message));
+    }
+  };
+};
+
+export const alterAuthCheck = () => {
+  return (dispatch) => {
+    const email = localStorage.getItem("email");
+    if (!email) {
+      //log out
+    } else {
+      const userId = localStorage.getItem("userId");
+      dispatch(alterAuthSuccess(email, userId));
     }
   };
 };

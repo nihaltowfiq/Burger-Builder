@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AlterAuth from "./AlternateAuth/AlterAuth";
@@ -7,8 +7,13 @@ import BurgerBuilder from "./BurgerBuilder/BurgerBuilder";
 import Checkout from "./BurgerBuilder/Orders/Checkout";
 import Orders from "./BurgerBuilder/Orders/Orders";
 import Header from "./Header/Header";
+import { alterAuthCheck } from "../redux/alterAuthActions";
 
-const Main = ({ email }) => {
+const Main = ({ email, alterAuthCheck }) => {
+  useEffect(() => {
+    alterAuthCheck();
+  }, [alterAuthCheck]);
+
   let routes = null;
   if (email === null) {
     routes = (
@@ -41,4 +46,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = { alterAuthCheck };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

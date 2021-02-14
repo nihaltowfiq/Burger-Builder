@@ -49,6 +49,7 @@ export const alterAuthCheck = () => {
     const email = localStorage.getItem("email");
     if (!email) {
       //log out
+      dispatch(alterLogout());
     } else {
       const userId = localStorage.getItem("userId");
       dispatch(alterAuthSuccess(email, userId));

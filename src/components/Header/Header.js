@@ -4,8 +4,9 @@ import { NavLink } from "react-router-dom";
 import { Nav, Navbar, NavbarBrand, NavItem } from "reactstrap";
 import logo from "../../assests/logo.png";
 import "./Header.css";
+import { alterLogout } from "../../redux/alterAuthActions";
 
-const Header = ({ email }) => {
+const Header = ({ email, alterLogout }) => {
   let links = null;
   if (email === null) {
     links = (
@@ -27,7 +28,7 @@ const Header = ({ email }) => {
           <NavLink className="nav_link" exact to="/orders">
             Orders
           </NavLink>
-          <NavLink className="nav_link" exact to="/login">
+          <NavLink className="nav_link" exact to="/login" onClick={alterLogout}>
             Logout
           </NavLink>
         </NavItem>
@@ -56,4 +57,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = { alterLogout };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,5 +1,5 @@
 import { alterAuth } from "../components/AlternateAuth/firebase";
-import { AUTH_SUCCESS } from "./actionTypes";
+import { AUTH_SUCCESS, LOG_OUT } from "./actionTypes";
 
 const alterAuthSuccess = (email, userId) => {
   return { type: AUTH_SUCCESS, payload: { email, userId } };
@@ -31,6 +31,17 @@ export const alterAuthAction = (email, password, mode) => {
         .catch((error) => console.log(error.message));
     }
   };
+};
+
+export const alterLogout = () => {
+  alterAuth
+    .signOut()
+    .then(() => {
+      localStorage.removeItem("email");
+      localStorage.removeItem("userId");
+    })
+    .catch((error) => console.log(error));
+  return { type: LOG_OUT };
 };
 
 export const alterAuthCheck = () => {

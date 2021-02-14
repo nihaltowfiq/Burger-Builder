@@ -2,6 +2,7 @@ import {
   ADD_INGREDIENT,
   AUTH_SUCCESS,
   LOAD_ORDERS,
+  LOG_OUT,
   ORDERS_LOAD_FAILED,
   REMOVE_INGREDIENT,
   RESET_INGREDIENTS,
@@ -99,6 +100,12 @@ export const Reducer = (state = initialState, action) => {
         ...state,
         email: action.payload.email,
         userId: action.payload.userId,
+      };
+    case LOG_OUT:
+      return {
+        ...state,
+        email: null,
+        userId: null,
       };
     default:
       return state;

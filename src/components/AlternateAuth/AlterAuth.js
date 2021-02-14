@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import { alterAuthAction } from "../../redux/alterAuthActions";
 import { connect } from "react-redux";
+import Spinner from "../Spinner/Spinner";
 
 const formStyle = {
   border: "1px solid gray",
@@ -12,21 +13,15 @@ const formStyle = {
 const Auth = (props) => {
   const [mode, setMode] = useState("Sign Up");
 
-  //   const signUp = (email, password) => {
-  //     alterAuth
-  //       .createUserWithEmailAndPassword(email, password)
-  //       .then((userCredential) => {
-  //         var { email } = userCredential.user;
-  //         console.log(email);
-  //       })
-  //       .catch((error) => console.log(error.message));
-  //   };
-
   const switchModeHandler = () => {
     setMode(mode === "Sign Up" ? "Login" : "Sign Up");
   };
-  return (
-    <div>
+
+  let form = null;
+  if (props.authLoading) {
+    form = <Spinner />;
+  } else {
+    form = (
       <Formik
         initialValues={{ email: "", password: "", confirmPassword: "" }}
         onSubmit={(values) => {
@@ -117,10 +112,15 @@ const Auth = (props) => {
           </div>
         )}
       </Formik>
-    </div>
-  );
+    );
+  }
+  return <div>{form}</div>;
+};
+
+const mapStateToProps = (state) => {
+  return { authLoading: state.authLoading, authFailedMsg: state.authFailedMsg };
 };
 
 const mapDispatchToProps = { alterAuthAction };
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

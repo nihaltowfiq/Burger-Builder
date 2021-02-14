@@ -1,34 +1,46 @@
 import { alterAuth } from "../components/AlternateAuth/firebase";
-import { AUTH_SUCCESS, LOG_OUT } from "./actionTypes";
+import { AUTH_LOADING, AUTH_SUCCESS, LOG_OUT } from "./actionTypes";
 
 const alterAuthSuccess = (email, userId) => {
   return { type: AUTH_SUCCESS, payload: { email, userId } };
 };
 
+const alterLoading = (isLoading) => {
+  return { type: AUTH_LOADING, payload: isLoading };
+};
+
 export const alterAuthAction = (email, password, mode) => {
   return (dispatch) => {
+    dispatch(alterLoading(true));
+
     if (mode === "Sign Up") {
       alterAuth
         .createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
           const { email, uid } = userCredential.user;
-          console.log(userCredential.user);
           localStorage.setItem("email", email);
           localStorage.setItem("userId", uid);
           dispatch(alterAuthSuccess(email, uid));
+          dispatch(alterLoading(false));
         })
-        .catch((error) => console.log(error.message));
+        .catch((error) => {
+          dispatch(alterLoading(false));
+          console.log(error.message);
+        });
     } else {
       alterAuth
         .signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
           const { email, uid } = userCredential.user;
-          console.log(userCredential.user);
           localStorage.setItem("email", email);
           localStorage.setItem("userId", uid);
           dispatch(alterAuthSuccess(email, uid));
+          dispatch(alterLoading(false));
         })
-        .catch((error) => console.log(error.message));
+        .catch((error) => {
+          dispatch(alterLoading(false));
+          console.log(error.message);
+        });
     }
   };
 };

@@ -1,5 +1,6 @@
 import {
   ADD_INGREDIENT,
+  AUTH_LOADING,
   AUTH_SUCCESS,
   LOAD_ORDERS,
   LOG_OUT,
@@ -28,6 +29,8 @@ const initialState = {
   purchasable: false,
   email: null,
   userId: null,
+  authLoading: false,
+  authFailedMsg: null,
 };
 
 export const Reducer = (state = initialState, action) => {
@@ -107,6 +110,8 @@ export const Reducer = (state = initialState, action) => {
         email: null,
         userId: null,
       };
+    case AUTH_LOADING:
+      return { ...state, authLoading: action.payload };
     default:
       return state;
   }

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import { auth } from "../../redux/authActionsCreator";
+import { alterAuthAction } from "../../redux/alterAuthActions";
 import { connect } from "react-redux";
-import axios from "axios";
 
 const formStyle = {
   border: "1px solid gray",
@@ -13,18 +12,15 @@ const formStyle = {
 const Auth = (props) => {
   const [mode, setMode] = useState("Sign Up");
 
-  const signUp = (email, password) => {
-    const authData = { email, password, returnSecureToken: true };
-
-    const API_KEY = "AIzaSyAB5ugyuc_EhxltqEeIVMQXpikXuMhd6-4";
-    axios
-      .post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
-          API_KEY,
-        authData
-      )
-      .then((res) => console.log(res));
-  };
+  //   const signUp = (email, password) => {
+  //     alterAuth
+  //       .createUserWithEmailAndPassword(email, password)
+  //       .then((userCredential) => {
+  //         var { email } = userCredential.user;
+  //         console.log(email);
+  //       })
+  //       .catch((error) => console.log(error.message));
+  //   };
 
   const switchModeHandler = () => {
     setMode(mode === "Sign Up" ? "Login" : "Sign Up");
@@ -34,8 +30,15 @@ const Auth = (props) => {
       <Formik
         initialValues={{ email: "", password: "", confirmPassword: "" }}
         onSubmit={(values) => {
-          signUp(values.email, values.confirmPassword);
-          console.log("email:", values.email, "pass:", values.confirmPassword);
+          props.alterAuthAction(values.email, values.password, mode);
+          console.log(
+            "EMAIL:",
+            values.email,
+            "PASS:",
+            values.password,
+            "MODE:",
+            mode
+          );
         }}
         validate={(values) => {
           const errors = {};
@@ -118,12 +121,6 @@ const Auth = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    auth: (email, password) => dispatch(auth(email, password)),
-  };
-};
-
-// const mapDispatchToProps = { auth };
+const mapDispatchToProps = { alterAuthAction };
 
 export default connect(null, mapDispatchToProps)(Auth);

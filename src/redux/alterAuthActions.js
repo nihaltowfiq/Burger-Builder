@@ -1,5 +1,10 @@
 import { alterAuth } from "../components/AlternateAuth/firebase";
-import { AUTH_LOADING, AUTH_SUCCESS, LOG_OUT } from "./actionTypes";
+import {
+  AUTH_FAILED,
+  AUTH_LOADING,
+  AUTH_SUCCESS,
+  LOG_OUT,
+} from "./actionTypes";
 
 const alterAuthSuccess = (email, userId) => {
   return { type: AUTH_SUCCESS, payload: { email, userId } };
@@ -7,6 +12,10 @@ const alterAuthSuccess = (email, userId) => {
 
 const alterLoading = (isLoading) => {
   return { type: AUTH_LOADING, payload: isLoading };
+};
+
+const alterAuthFailed = (errMsg) => {
+  return { type: AUTH_FAILED, payload: errMsg };
 };
 
 export const alterAuthAction = (email, password, mode) => {
@@ -25,7 +34,7 @@ export const alterAuthAction = (email, password, mode) => {
         })
         .catch((error) => {
           dispatch(alterLoading(false));
-          console.log(error.message);
+          dispatch(alterAuthFailed(error.message));
         });
     } else {
       alterAuth
@@ -39,7 +48,7 @@ export const alterAuthAction = (email, password, mode) => {
         })
         .catch((error) => {
           dispatch(alterLoading(false));
-          console.log(error.message);
+          dispatch(alterAuthFailed(error.message));
         });
     }
   };

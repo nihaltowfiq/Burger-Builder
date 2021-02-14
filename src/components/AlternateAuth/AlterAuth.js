@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { alterAuthAction } from "../../redux/alterAuthActions";
 import { connect } from "react-redux";
 import Spinner from "../Spinner/Spinner";
+import { Alert } from "reactstrap";
 
 const formStyle = {
   border: "1px solid gray",
@@ -26,14 +27,6 @@ const Auth = (props) => {
         initialValues={{ email: "", password: "", confirmPassword: "" }}
         onSubmit={(values) => {
           props.alterAuthAction(values.email, values.password, mode);
-          console.log(
-            "EMAIL:",
-            values.email,
-            "PASS:",
-            values.password,
-            "MODE:",
-            mode
-          );
         }}
         validate={(values) => {
           const errors = {};
@@ -114,7 +107,14 @@ const Auth = (props) => {
       </Formik>
     );
   }
-  return <div>{form}</div>;
+  return (
+    <div>
+      {props.authFailedMsg && (
+        <Alert color="danger">{props.authFailedMsg}</Alert>
+      )}
+      {form}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {

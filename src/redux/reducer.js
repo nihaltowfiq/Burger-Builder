@@ -1,5 +1,6 @@
 import {
   ADD_INGREDIENT,
+  AUTH_FAILED,
   AUTH_LOADING,
   AUTH_SUCCESS,
   LOAD_ORDERS,
@@ -109,9 +110,12 @@ export const Reducer = (state = initialState, action) => {
         ...state,
         email: null,
         userId: null,
+        authFailedMsg: null,
       };
     case AUTH_LOADING:
       return { ...state, authLoading: action.payload };
+    case AUTH_FAILED:
+      return { ...state, authFailedMsg: action.payload };
     default:
       return state;
   }

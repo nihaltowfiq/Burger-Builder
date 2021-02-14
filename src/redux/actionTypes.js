@@ -9,3 +9,11 @@ export const RESET_INGREDIENTS = "RESET_INGREDIENTS";
 export const LOAD_ORDERS = "LOAD_ORDERS";
 
 export const ORDERS_LOAD_FAILED = "ORDERS_LOAD_FAILED";
+
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+
+export const AUTH_FAILED = "AUTH_FAILED";
+
+export const AUTH_LOADING = "AUTH_LOADING";
+
+export const LOG_OUT = "LOG_OUT";

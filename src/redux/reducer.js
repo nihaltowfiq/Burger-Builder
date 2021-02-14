@@ -1,5 +1,6 @@
 import {
   ADD_INGREDIENT,
+  AUTH_SUCCESS,
   LOAD_ORDERS,
   ORDERS_LOAD_FAILED,
   REMOVE_INGREDIENT,
@@ -24,6 +25,8 @@ const initialState = {
   orderError: false,
   totalPrice: 50,
   purchasable: false,
+  email: null,
+  userId: null,
 };
 
 export const Reducer = (state = initialState, action) => {
@@ -88,6 +91,14 @@ export const Reducer = (state = initialState, action) => {
         ...state,
         orderError: true,
         orderLoading: false,
+      };
+
+    //ALTER AUTH CASES
+    case AUTH_SUCCESS:
+      return {
+        ...state,
+        email: action.payload.email,
+        userId: action.payload.userId,
       };
     default:
       return state;

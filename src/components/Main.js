@@ -19,6 +19,7 @@ const Main = ({ email, alterAuthCheck }) => {
     routes = (
       <Switch>
         <Route path="/login" component={AlterAuth} />
+        {/* <Route path="/login" component={Auth} /> */}
         <Redirect to="login" />
       </Switch>
     );

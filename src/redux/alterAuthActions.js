@@ -20,10 +20,9 @@ export const alterAuthAction = (email, password, mode) => {
       alterAuth
         .signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-          console.log(user.email);
-          console.log(user.uid);
+          const { email, uid } = userCredential.user;
+          console.log(userCredential.user);
+          dispatch(alterAuthSuccess(email, uid));
         })
         .catch((error) => console.log(error.message));
     }

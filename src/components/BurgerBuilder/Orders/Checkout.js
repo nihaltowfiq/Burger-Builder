@@ -36,10 +36,12 @@ class Checkout extends Component {
       customer: this.state.values,
       totalPrice: this.props.totalPrice,
       orderTime: new Date(),
+      email: this.props.email,
+      userId: this.props.userId,
     };
     axios
       .post(
-        "https://burger-builder-website-default-rtdb.firebaseio.com/orders.json",
+        `https://burger-builder-website-default-rtdb.firebaseio.com/orders.json`,
         order
       )
       .then((res) => {
@@ -162,6 +164,8 @@ const mapStateToProps = (state) => {
     ingredients: state.ingredients,
     totalPrice: state.totalPrice,
     purchasable: state.purchasable,
+    email: state.email,
+    userId: state.userId,
   };
 };
 

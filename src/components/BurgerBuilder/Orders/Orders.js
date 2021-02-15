@@ -5,7 +5,9 @@ import { fetchOrders } from "../../../redux/actionsCreator";
 import Spinner from "../../Spinner/Spinner";
 import Order from "./Order";
 
-const Orders = ({ fetchOrders, orders, orderLoading, orderError }) => {
+const Orders = ({ fetchOrders, orders, orderLoading, orderError, email }) => {
+  const filterOrders = orders.filter((item) => item.email === email);
+  console.log(filterOrders);
   useEffect(() => fetchOrders(), [fetchOrders]);
   let order = null;
   if (orderError) {
@@ -24,8 +26,10 @@ const Orders = ({ fetchOrders, orders, orderLoading, orderError }) => {
     } else {
       order = (
         <div>
-          <h3 className="text-center m-3">Total Order: {orders.length}</h3>
-          {orders.map((order) => (
+          <h3 className="text-center m-3">
+            Your Total Order: {filterOrders.length}
+          </h3>
+          {filterOrders.map((order) => (
             <Order key={order.id} order={order} />
           ))}
         </div>
@@ -40,6 +44,8 @@ const mapStateToProps = (state) => {
     orders: state.orders,
     orderLoading: state.orderLoading,
     orderError: state.orderError,
+    email: state.email,
+    userId: state.userId,
   };
 };
 

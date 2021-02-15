@@ -36,7 +36,7 @@ export const fetchOrders = () => {
   return (dispath) => {
     axios
       .get(
-        "https://burger-builder-website-default-rtdb.firebaseio.com/orders.json"
+        `https://burger-builder-website-default-rtdb.firebaseio.com/orders.json`
       )
       .then((res) => dispath(loadOrders(res.data)))
       .catch((err) => dispath(ordersLoadFailed()));

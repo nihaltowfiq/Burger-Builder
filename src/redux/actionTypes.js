@@ -17,5 +17,3 @@ export const AUTH_FAILED = "AUTH_FAILED";
 export const AUTH_LOADING = "AUTH_LOADING";
 
 export const LOG_OUT = "LOG_OUT";
-
-export const UPDATE_USERNAME = "UPDATE_USERNAME";

@@ -6,8 +6,9 @@ import logo from "../../assests/logo.png";
 import "./Header.css";
 import { alterLogout } from "../../redux/alterAuthActions";
 
-const Header = ({ email, alterLogout, username }) => {
-  console.log(username);
+const Header = ({ email, alterLogout }) => {
+  const username = localStorage.getItem("username");
+
   let links = null;
   if (email === null) {
     links = (
@@ -62,7 +63,6 @@ const Header = ({ email, alterLogout, username }) => {
 const mapStateToProps = (state) => {
   return {
     email: state.email,
-    username: state.username,
   };
 };
 

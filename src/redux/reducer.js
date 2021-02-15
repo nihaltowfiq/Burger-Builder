@@ -105,7 +105,7 @@ export const Reducer = (state = initialState, action) => {
         ...state,
         email: action.payload.email,
         userId: action.payload.userId,
-        username: action.payload.name,
+        username: action.payload.username,
       };
     case LOG_OUT:
       return {

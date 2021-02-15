@@ -4,7 +4,6 @@ import {
   AUTH_LOADING,
   AUTH_SUCCESS,
   LOG_OUT,
-  UPDATE_USERNAME,
 } from "./actionTypes";
 
 const alterAuthSuccess = (email, userId, name) => {
@@ -19,15 +18,15 @@ const alterAuthFailed = (errMsg) => {
   return { type: AUTH_FAILED, payload: errMsg };
 };
 
-const updateUsername = (name) => {
+const updateUsername = (username) => {
   alterAuth.currentUser
     .updateProfile({
-      displayName: name,
+      displayName: username,
     })
     .then((res) => console.log(res));
 };
 
-export const alterAuthAction = (email, password, mode, name) => {
+export const alterAuthAction = (email, password, mode, username) => {
   return (dispatch) => {
     dispatch(alterLoading(true));
 
@@ -38,8 +37,9 @@ export const alterAuthAction = (email, password, mode, name) => {
           const { email, uid, displayName } = userCredential.user;
           localStorage.setItem("email", email);
           localStorage.setItem("userId", uid);
-          updateUsername(name);
-          dispatch(alterAuthSuccess(email, uid, name));
+          localStorage.setItem("username", username);
+          updateUsername(username);
+          dispatch(alterAuthSuccess(email, uid, username));
           dispatch(alterLoading(false));
           console.log("SIGN UP:", displayName);
         })
@@ -54,6 +54,7 @@ export const alterAuthAction = (email, password, mode, name) => {
           const { email, uid, displayName } = userCredential.user;
           localStorage.setItem("email", email);
           localStorage.setItem("userId", uid);
+          localStorage.setItem("username", displayName);
           dispatch(alterAuthSuccess(email, uid, displayName));
           dispatch(alterLoading(false));
           console.log("SIGN IN:", displayName);
@@ -72,6 +73,7 @@ export const alterLogout = () => {
     .then(() => {
       localStorage.removeItem("email");
       localStorage.removeItem("userId");
+      localStorage.removeItem("username");
     })
     .catch((error) => console.log(error));
   return { type: LOG_OUT };

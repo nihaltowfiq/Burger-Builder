@@ -32,6 +32,7 @@ const initialState = {
   userId: null,
   authLoading: false,
   authFailedMsg: null,
+  username: null,
 };
 
 export const Reducer = (state = initialState, action) => {
@@ -104,6 +105,7 @@ export const Reducer = (state = initialState, action) => {
         ...state,
         email: action.payload.email,
         userId: action.payload.userId,
+        username: action.payload.name,
       };
     case LOG_OUT:
       return {
@@ -111,6 +113,7 @@ export const Reducer = (state = initialState, action) => {
         email: null,
         userId: null,
         authFailedMsg: null,
+        username: null,
       };
     case AUTH_LOADING:
       return { ...state, authLoading: action.payload };

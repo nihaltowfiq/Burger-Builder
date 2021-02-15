@@ -6,7 +6,8 @@ import logo from "../../assests/logo.png";
 import "./Header.css";
 import { alterLogout } from "../../redux/alterAuthActions";
 
-const Header = ({ email, alterLogout }) => {
+const Header = ({ email, alterLogout, username }) => {
+  console.log(username);
   let links = null;
   if (email === null) {
     links = (
@@ -45,6 +46,13 @@ const Header = ({ email, alterLogout }) => {
           <img src={logo} alt="logo" />
         </NavbarBrand>
 
+        {username && (
+          <h5 className="text-white ml-4">
+            Welcome,{" "}
+            <span style={{ textTransform: "capitalize" }}>{username}</span>
+          </h5>
+        )}
+
         {links}
       </Navbar>
     </div>
@@ -54,6 +62,7 @@ const Header = ({ email, alterLogout }) => {
 const mapStateToProps = (state) => {
   return {
     email: state.email,
+    username: state.username,
   };
 };
 

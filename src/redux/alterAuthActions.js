@@ -4,10 +4,11 @@ import {
   AUTH_LOADING,
   AUTH_SUCCESS,
   LOG_OUT,
+  UPDATE_USERNAME,
 } from "./actionTypes";
 
-const alterAuthSuccess = (email, userId) => {
-  return { type: AUTH_SUCCESS, payload: { email, userId } };
+const alterAuthSuccess = (email, userId, name) => {
+  return { type: AUTH_SUCCESS, payload: { email, userId, name } };
 };
 
 const alterLoading = (isLoading) => {
@@ -18,7 +19,15 @@ const alterAuthFailed = (errMsg) => {
   return { type: AUTH_FAILED, payload: errMsg };
 };
 
-export const alterAuthAction = (email, password, mode) => {
+const updateUsername = (name) => {
+  alterAuth.currentUser
+    .updateProfile({
+      displayName: name,
+    })
+    .then((res) => console.log(res));
+};
+
+export const alterAuthAction = (email, password, mode, name) => {
   return (dispatch) => {
     dispatch(alterLoading(true));
 
@@ -26,11 +35,13 @@ export const alterAuthAction = (email, password, mode) => {
       alterAuth
         .createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          const { email, uid } = userCredential.user;
+          const { email, uid, displayName } = userCredential.user;
           localStorage.setItem("email", email);
           localStorage.setItem("userId", uid);
-          dispatch(alterAuthSuccess(email, uid));
+          updateUsername(name);
+          dispatch(alterAuthSuccess(email, uid, name));
           dispatch(alterLoading(false));
+          console.log("SIGN UP:", displayName);
         })
         .catch((error) => {
           dispatch(alterLoading(false));
@@ -40,11 +51,12 @@ export const alterAuthAction = (email, password, mode) => {
       alterAuth
         .signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          const { email, uid } = userCredential.user;
+          const { email, uid, displayName } = userCredential.user;
           localStorage.setItem("email", email);
           localStorage.setItem("userId", uid);
-          dispatch(alterAuthSuccess(email, uid));
+          dispatch(alterAuthSuccess(email, uid, displayName));
           dispatch(alterLoading(false));
+          console.log("SIGN IN:", displayName);
         })
         .catch((error) => {
           dispatch(alterLoading(false));

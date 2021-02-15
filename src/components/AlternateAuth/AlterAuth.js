@@ -31,7 +31,12 @@ const Auth = (props) => {
           confirmPassword: "",
         }}
         onSubmit={(values) => {
-          props.alterAuthAction(values.email, values.password, mode);
+          props.alterAuthAction(
+            values.email,
+            values.password,
+            mode,
+            values.name
+          );
         }}
         validate={(values) => {
           const errors = {};
@@ -54,7 +59,7 @@ const Auth = (props) => {
             if (!values.name) {
               errors.name = "Required";
             } else if (/[^a-zA-Z]/i.test(values.name)) {
-              errors.name = "Only use Alphabet!";
+              errors.name = "Only Alphabet without space!";
             }
 
             if (!values.confirmPassword) {

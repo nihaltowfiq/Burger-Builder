@@ -24,12 +24,18 @@ const Auth = (props) => {
   } else {
     form = (
       <Formik
-        initialValues={{ email: "", password: "", confirmPassword: "" }}
+        initialValues={{
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        }}
         onSubmit={(values) => {
           props.alterAuthAction(values.email, values.password, mode);
         }}
         validate={(values) => {
           const errors = {};
+
           if (!values.email) {
             errors.email = "Required";
           } else if (
@@ -45,6 +51,12 @@ const Auth = (props) => {
           }
 
           if (mode === "Sign Up") {
+            if (!values.name) {
+              errors.name = "Required";
+            } else if (/[^a-zA-Z]/i.test(values.name)) {
+              errors.name = "Only use Alphabet!";
+            }
+
             if (!values.confirmPassword) {
               errors.confirmPassword = "Required";
             } else if (values.password !== values.confirmPassword) {
@@ -64,6 +76,21 @@ const Auth = (props) => {
               Switch to {mode === "Sign Up" ? "Login" : "Sign Up"}
             </button>
             <form onSubmit={handleSubmit}>
+              {mode === "Sign Up" && (
+                <>
+                  <input
+                    name="name"
+                    placeholder="Enter Your Name"
+                    className="form-control"
+                    type="text"
+                    value={values.name}
+                    onChange={handleChange}
+                  />
+                  <span className="text-danger">{errors.name}</span>
+                  <br />
+                </>
+              )}
+
               <input
                 name="email"
                 placeholder="Enter Your Email"

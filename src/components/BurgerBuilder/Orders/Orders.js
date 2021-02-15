@@ -10,14 +10,14 @@ const Orders = ({ fetchOrders, orders, orderLoading, orderError }) => {
   let order = null;
   if (orderError) {
     order = (
-      <Alert className="text-center" color="danger">
+      <Alert className="text-center font-weight-bold" color="danger">
         Sorry Failed to Load Orders!
       </Alert>
     );
   } else {
     if (orders.length === 0) {
       order = (
-        <Alert className="text-center" color="warning">
+        <Alert className="text-center font-weight-bold" color="warning">
           You have <strong>no</strong> Orders!
         </Alert>
       );

@@ -7,7 +7,6 @@ import Order from "./Order";
 
 const Orders = ({ fetchOrders, orders, orderLoading, orderError, email }) => {
   const filterOrders = orders.filter((item) => item.email === email);
-  console.log(filterOrders);
   useEffect(() => fetchOrders(), [fetchOrders]);
   let order = null;
   if (orderError) {

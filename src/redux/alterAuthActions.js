@@ -19,11 +19,9 @@ const alterAuthFailed = (errMsg) => {
 };
 
 const updateUsername = (username) => {
-  alterAuth.currentUser
-    .updateProfile({
-      displayName: username,
-    })
-    .then((res) => console.log(res));
+  alterAuth.currentUser.updateProfile({
+    displayName: username,
+  });
 };
 
 export const alterAuthAction = (email, password, mode, username) => {
@@ -34,14 +32,13 @@ export const alterAuthAction = (email, password, mode, username) => {
       alterAuth
         .createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          const { email, uid, displayName } = userCredential.user;
+          const { email, uid } = userCredential.user;
           localStorage.setItem("email", email);
           localStorage.setItem("userId", uid);
           localStorage.setItem("username", username);
           updateUsername(username);
           dispatch(alterAuthSuccess(email, uid, username));
           dispatch(alterLoading(false));
-          console.log("SIGN UP:", displayName);
         })
         .catch((error) => {
           dispatch(alterLoading(false));
@@ -57,7 +54,6 @@ export const alterAuthAction = (email, password, mode, username) => {
           localStorage.setItem("username", displayName);
           dispatch(alterAuthSuccess(email, uid, displayName));
           dispatch(alterLoading(false));
-          console.log("SIGN IN:", displayName);
         })
         .catch((error) => {
           dispatch(alterLoading(false));
@@ -68,6 +64,7 @@ export const alterAuthAction = (email, password, mode, username) => {
 };
 
 export const alterLogout = () => {
+  localStorage.removeItem("username");
   alterAuth
     .signOut()
     .then(() => {
